@@ -5,142 +5,101 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OBJ Compressor</title>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  background: #0d1117; color: #c9d1d9;
-  height: 100vh; display: flex; flex-direction: column; overflow: hidden;
-}
-header {
-  background: #161b22; border-bottom: 1px solid #30363d;
-  padding: 8px 16px; display: flex; align-items: flex-start;
-  gap: 12px; flex-shrink: 0; flex-wrap: wrap;
-}
-header h1 { font-size: 1rem; font-weight: 700; color: #58a6ff; white-space: nowrap; align-self: center; }
-.file-btn {
-  background: #238636; border: 1px solid #2ea043; color: #fff;
-  padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 0.82rem;
-  transition: background .15s; align-self: center; white-space: nowrap; display:inline-block;
-}
-.file-btn:hover { background: #2ea043; }
-.file-btn.folder { background: #1a5c2a; border-color: #238636; }
-.file-btn.folder:hover { background: #238636; }
-input[type="file"] { display: none; }
-.vsep { width: 1px; background: #30363d; height: 60px; flex-shrink: 0; align-self: center; }
-.open-btns { display: flex; flex-direction: column; gap: 4px; align-self: center; }
-.sliders-block { display: flex; flex-direction: column; gap: 5px; }
-.sliders-block .block-label {
-  font-size: 0.65rem; color: #58a6ff; text-transform: uppercase;
-  letter-spacing: .07em; font-weight: 700;
-}
-.ctrl-row { display: flex; align-items: center; gap: 6px; }
-.ctrl-row .method-chk { font-size: 0.73rem; color: #8b949e; min-width: 86px; display:flex; align-items:center; gap:4px; cursor:pointer; }
-input[type="range"] { accent-color: #58a6ff; width: 130px; cursor: pointer; }
-.slider-val { font-size: 0.73rem; color: #c9d1d9; min-width: 170px; }
-.chk-row { display: flex; align-items: center; gap: 5px; font-size: 0.78rem; cursor: pointer; }
-.chk-row input { accent-color: #58a6ff; }
-button {
-  background: #21262d; border: 1px solid #30363d; color: #c9d1d9;
-  padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 0.82rem;
-  transition: all .15s; white-space: nowrap; align-self: center;
-}
-button:hover:not(:disabled) { background: #30363d; border-color: #58a6ff; }
-button.primary { background: #1f6feb; border-color: #388bfd; color: #fff; }
-button.primary:hover:not(:disabled) { background: #388bfd; }
-button.success { background: #1a5c2a; border-color: #238636; color: #3fb950; }
-button.success:hover:not(:disabled) { background: #238636; }
-button.warn { background: #3d1f00; border-color: #9e4400; color: #e3a040; }
-button.warn:hover:not(:disabled) { background: #522b00; }
-button:disabled { opacity: .38; cursor: not-allowed; }
-.badge {
-  background: #0d4a1e; border: 1px solid #238636; color: #3fb950;
-  border-radius: 6px; padding: 3px 12px; font-size: 0.82rem; font-weight: 600;
-  display: none; align-self: center;
-}
-.badge.show { display: inline-block; }
-.btn-group { display: flex; flex-direction: column; gap: 4px; align-self: center; }
-.btn-group button { width: 100%; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d9;height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+header{background:#161b22;border-bottom:1px solid #30363d;padding:8px 16px;display:flex;align-items:flex-start;gap:10px;flex-shrink:0;flex-wrap:wrap;}
+header h1{font-size:.95rem;font-weight:700;color:#58a6ff;white-space:nowrap;align-self:center;}
+.file-btn{background:#238636;border:1px solid #2ea043;color:#fff;padding:4px 12px;border-radius:6px;cursor:pointer;font-size:.8rem;transition:background .15s;align-self:center;white-space:nowrap;display:inline-block;}
+.file-btn:hover{background:#2ea043;}
+.file-btn.folder{background:#1a5c2a;border-color:#238636;}
+.file-btn.folder:hover{background:#238636;}
+input[type="file"]{display:none;}
+.vsep{width:1px;background:#30363d;height:56px;flex-shrink:0;align-self:center;}
+.open-btns{display:flex;flex-direction:column;gap:4px;align-self:center;}
+.sliders-block{display:flex;flex-direction:column;gap:4px;}
+.sliders-block .block-label{font-size:.62rem;color:#58a6ff;text-transform:uppercase;letter-spacing:.07em;font-weight:700;}
+.ctrl-row{display:flex;align-items:center;gap:6px;}
+.ctrl-row .method-chk{font-size:.71rem;color:#8b949e;min-width:82px;display:flex;align-items:center;gap:4px;cursor:pointer;}
+input[type="range"]{accent-color:#58a6ff;width:120px;cursor:pointer;}
+.slider-val{font-size:.71rem;color:#c9d1d9;min-width:160px;}
+.chk-row{display:flex;align-items:center;gap:5px;font-size:.78rem;cursor:pointer;}
+.chk-row input{accent-color:#58a6ff;}
+button{background:#21262d;border:1px solid #30363d;color:#c9d1d9;padding:4px 12px;border-radius:6px;cursor:pointer;font-size:.8rem;transition:all .15s;white-space:nowrap;align-self:center;}
+button:hover:not(:disabled){background:#30363d;border-color:#58a6ff;}
+button.primary{background:#1f6feb;border-color:#388bfd;color:#fff;}
+button.primary:hover:not(:disabled){background:#388bfd;}
+button.success{background:#1a5c2a;border-color:#238636;color:#3fb950;}
+button.success:hover:not(:disabled){background:#238636;}
+button.warn{background:#3d1f00;border-color:#9e4400;color:#e3a040;}
+button.warn:hover:not(:disabled){background:#522b00;}
+button:disabled{opacity:.38;cursor:not-allowed;}
+.badge{background:#0d4a1e;border:1px solid #238636;color:#3fb950;border-radius:6px;padding:3px 10px;font-size:.8rem;font-weight:600;display:none;align-self:center;}
+.badge.show{display:inline-block;}
+.btn-group{display:flex;flex-direction:column;gap:3px;align-self:center;}
+.btn-group button{width:100%;}
+select{background:#21262d;border:1px solid #30363d;color:#c9d1d9;padding:4px 8px;border-radius:6px;font-size:.8rem;cursor:pointer;outline:none;}
+select:focus{border-color:#58a6ff;}
+.fmt-group{display:flex;flex-direction:column;gap:4px;align-self:center;}
+.fmt-group label{font-size:.62rem;color:#8b949e;text-transform:uppercase;letter-spacing:.05em;}
 
 /* FILE LIST */
-.file-list-panel {
-  background: #161b22; border-right: 1px solid #30363d;
-  width: 240px; min-width: 160px; display: flex; flex-direction: column; flex-shrink: 0;
-}
-.file-list-header {
-  padding: 5px 10px; font-size: 0.68rem; color: #8b949e;
-  text-transform: uppercase; letter-spacing: .07em;
-  border-bottom: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; gap: 4px;
-}
-.file-list-header button { font-size: 0.68rem; padding: 2px 7px; }
-#fileList { flex: 1; overflow-y: auto; }
-.file-item {
-  display: flex; align-items: center; gap: 6px;
-  padding: 4px 10px; cursor: pointer; border-bottom: 1px solid #1c2128;
-  font-size: 0.76rem; transition: background .1s;
-}
-.file-item:hover { background: #21262d; }
-.file-item.active { background: #1a3a5c; border-left: 3px solid #58a6ff; padding-left: 7px; }
-.file-item .finfo { flex: 1; overflow: hidden; }
-.file-item .fname { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.file-item .fpath { font-size: 0.65rem; color: #555; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.file-item .fstatus { font-size: 0.68rem; color: #3fb950; white-space: nowrap; flex-shrink:0; }
-.file-item .fstatus.pending { color: #8b949e; }
+.file-list-panel{background:#161b22;border-right:1px solid #30363d;width:230px;min-width:150px;display:flex;flex-direction:column;flex-shrink:0;}
+.file-list-header{padding:5px 10px;font-size:.66rem;color:#8b949e;text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid #30363d;display:flex;justify-content:space-between;align-items:center;gap:4px;}
+.file-list-header button{font-size:.66rem;padding:2px 6px;}
+#fileList{flex:1;overflow-y:auto;}
+.file-item{display:flex;align-items:center;gap:6px;padding:4px 10px;cursor:pointer;border-bottom:1px solid #1c2128;font-size:.75rem;transition:background .1s;}
+.file-item:hover{background:#21262d;}
+.file-item.active{background:#1a3a5c;border-left:3px solid #58a6ff;padding-left:7px;}
+.file-item .finfo{flex:1;overflow:hidden;}
+.file-item .fname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.file-item .fpath{font-size:.63rem;color:#555;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.file-item .ftag{font-size:.6rem;background:#21262d;border:1px solid #30363d;border-radius:3px;padding:0 4px;flex-shrink:0;}
+.file-item .ftag.obj{border-color:#388bfd;color:#58a6ff;}
+.file-item .ftag.dae{border-color:#9e6a03;color:#e3b341;}
+.file-item .ftag.glb{border-color:#238636;color:#3fb950;}
+.file-item .fstatus{font-size:.66rem;color:#3fb950;white-space:nowrap;flex-shrink:0;}
+.file-item .fstatus.pending{color:#8b949e;}
 
 /* VIEWERS */
-.main-area { flex: 1; display: flex; overflow: hidden; }
-.viewers-container { flex: 1; position: relative; display: flex; overflow: hidden; }
-#orbitOverlay { position: absolute; inset: 0; z-index: 5; cursor: grab; }
-#orbitOverlay:active { cursor: grabbing; }
-.viewers { display: flex; flex: 1; overflow: hidden; pointer-events: none; }
-.viewer-pane { flex: 1; display: flex; flex-direction: column; border-right: 1px solid #30363d; overflow: hidden; }
-.viewer-pane:last-child { border-right: none; }
-.pane-header {
-  background: #161b22; padding: 5px 12px; pointer-events: auto;
-  display: flex; justify-content: space-between; align-items: center;
-  border-bottom: 1px solid #30363d; flex-shrink: 0; position: relative; z-index: 6;
-}
-.pane-title { font-size: 0.7rem; font-weight: 600; color: #8b949e; text-transform: uppercase; letter-spacing: .07em; }
-.pane-stats { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
-.chip { background: #21262d; border: 1px solid #30363d; border-radius: 4px; padding: 1px 8px; font-size: 0.72rem; font-variant-numeric: tabular-nums; }
-.chip.green  { background: #0d4a1e; border-color: #238636; color: #3fb950; }
-.chip.purple { background: #2d1f4e; border-color: #6e40c9; color: #a78bfa; }
-.canvas-wrap { flex: 1; position: relative; overflow: hidden; }
-canvas { display: block; }
-.empty-hint {
-  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  color: #30363d; font-size: 0.9rem; pointer-events: none; text-align: center; padding: 20px; z-index: 1;
-}
-/* confirm overlay */
-#confirmOverlay {
-  display:none; position:fixed; inset:0; background:#000a; z-index:300;
-  align-items:center; justify-content:center;
-}
-#confirmOverlay.show { display:flex; }
-#confirmBox {
-  background:#161b22; border:1px solid #30363d; border-radius:10px;
-  padding:20px 28px; max-width:420px; text-align:center;
-  box-shadow:0 8px 32px #000c;
-}
-#confirmBox h3 { color:#e3a040; margin-bottom:10px; font-size:1rem; }
-#confirmBox p { font-size:0.85rem; color:#8b949e; margin-bottom:16px; line-height:1.5; }
-#confirmBox .cbtns { display:flex; gap:10px; justify-content:center; }
-#progress {
-  display:none; position:fixed; bottom:0; left:0; right:0;
-  background:#1f6feb; color:#fff; text-align:center; font-size:0.8rem; padding:5px; z-index:200;
-}
+.main-area{flex:1;display:flex;overflow:hidden;}
+.viewers-container{flex:1;position:relative;display:flex;overflow:hidden;}
+#orbitOverlay{position:absolute;inset:0;z-index:5;cursor:grab;touch-action:none;}
+#orbitOverlay:active{cursor:grabbing;}
+.viewers{display:flex;flex:1;overflow:hidden;pointer-events:none;}
+.viewer-pane{flex:1;display:flex;flex-direction:column;border-right:1px solid #30363d;overflow:hidden;}
+.viewer-pane:last-child{border-right:none;}
+.pane-header{background:#161b22;padding:4px 10px;pointer-events:auto;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #30363d;flex-shrink:0;position:relative;z-index:6;}
+.pane-title{font-size:.68rem;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:.07em;}
+.pane-stats{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;}
+.chip{background:#21262d;border:1px solid #30363d;border-radius:4px;padding:1px 7px;font-size:.7rem;font-variant-numeric:tabular-nums;}
+.chip.green{background:#0d4a1e;border-color:#238636;color:#3fb950;}
+.chip.purple{background:#2d1f4e;border-color:#6e40c9;color:#a78bfa;}
+.chip.gold{background:#3d2f00;border-color:#9e6a03;color:#e3b341;}
+.canvas-wrap{flex:1;position:relative;overflow:hidden;}
+canvas{display:block;}
+.empty-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#30363d;font-size:.88rem;pointer-events:none;text-align:center;padding:20px;z-index:1;}
+
+/* CONFIRM */
+#confirmOverlay{display:none;position:fixed;inset:0;background:#000a;z-index:300;align-items:center;justify-content:center;}
+#confirmOverlay.show{display:flex;}
+#confirmBox{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:20px 28px;max-width:420px;text-align:center;box-shadow:0 8px 32px #000c;}
+#confirmBox h3{color:#e3a040;margin-bottom:10px;font-size:1rem;}
+#confirmBox p{font-size:.84rem;color:#8b949e;margin-bottom:16px;line-height:1.5;}
+#confirmBox .cbtns{display:flex;gap:10px;justify-content:center;}
+#progress{display:none;position:fixed;bottom:0;left:0;right:0;background:#1f6feb;color:#fff;text-align:center;font-size:.8rem;padding:5px;z-index:200;}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>🗜️ OBJ Compressor</h1>
+  <h1>🗜️ 3D Compressor</h1>
 
   <div class="open-btns">
-    <label class="file-btn" for="fileInput">📂 Otwórz pliki .OBJ</label>
+    <label class="file-btn" for="fileInput">📂 Otwórz pliki (.obj .dae .glb)</label>
     <label class="file-btn folder" for="folderInput">📁 Otwórz folder (z podkatalogami)</label>
   </div>
-  <input type="file" id="fileInput"   accept=".obj" multiple>
-  <input type="file" id="folderInput" accept=".obj" multiple webkitdirectory>
+  <input type="file" id="fileInput"   accept=".obj,.dae,.glb,.gltf" multiple>
+  <input type="file" id="folderInput" accept=".obj,.dae,.glb,.gltf" multiple webkitdirectory>
 
   <div class="vsep"></div>
 
@@ -172,17 +131,20 @@ canvas { display: block; }
 
   <div class="vsep"></div>
 
-  <div class="btn-group">
-    <button id="exportOBJ" disabled>💾 Zapisz aktywny .OBJ</button>
-    <button id="exportGLB" disabled>⚡ Zapisz aktywny .GLB</button>
+  <div class="fmt-group">
+    <label>Format zapisu</label>
+    <select id="outFormat">
+      <option value="obj">OBJ</option>
+      <option value="dae">DAE (Collada)</option>
+      <option value="glb">GLB (binary)</option>
+    </select>
   </div>
 
   <div class="btn-group">
-    <button id="exportAllOBJ"    disabled>📦 Wszystkie → .OBJ (pobierz)</button>
-    <button id="exportAllGLB"    disabled class="success">📦 Wszystkie → .GLB (pobierz)</button>
-    <button id="saveFolderOBJ"   disabled>📁 Zapisz do folderu (.OBJ)</button>
-    <button id="saveFolderGLB"   disabled class="success">📁 Zapisz do folderu (.GLB)</button>
-    <button id="overwriteOBJ"    disabled class="warn">⚠️ Nadpisz oryginały (.OBJ)</button>
+    <button id="exportSingle"    disabled>💾 Zapisz aktywny</button>
+    <button id="exportAllDown"   disabled>📦 Pobierz wszystkie</button>
+    <button id="saveFolderBtn"   disabled>📁 Zapisz do folderu…</button>
+    <button id="overwriteBtn"    disabled class="warn">⚠️ Nadpisz oryginały</button>
   </div>
 
   <span class="badge" id="badge"></span>
@@ -214,7 +176,7 @@ canvas { display: block; }
         </div>
         <div class="canvas-wrap">
           <canvas id="origCanvas"></canvas>
-          <div class="empty-hint" id="origHint">📂 Otwórz plik lub folder .OBJ</div>
+          <div class="empty-hint" id="origHint">📂 Otwórz plik lub folder (.obj .dae .glb)</div>
         </div>
       </div>
       <div class="viewer-pane">
@@ -223,8 +185,9 @@ canvas { display: block; }
           <div class="pane-stats">
             <span class="chip" id="cV">v –</span>
             <span class="chip" id="cF">f –</span>
-            <span class="chip" id="cS">OBJ: –</span>
-            <span class="chip" id="cG">GLB: –</span>
+            <span class="chip" id="cObj">OBJ –</span>
+            <span class="chip" id="cDae">DAE –</span>
+            <span class="chip" id="cGlb">GLB –</span>
           </div>
         </div>
         <div class="canvas-wrap">
@@ -236,7 +199,6 @@ canvas { display: block; }
   </div>
 </div>
 
-<!-- confirm dialog -->
 <div id="confirmOverlay">
   <div id="confirmBox">
     <h3>⚠️ Nadpisanie oryginałów</h3>
@@ -247,564 +209,536 @@ canvas { display: block; }
     </div>
   </div>
 </div>
-
 <div id="progress">⏳ Przetwarzanie…</div>
 
 <script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-  }
-}
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
 </script>
-
 <script type="module">
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
+import { OrbitControls }   from 'three/addons/controls/OrbitControls.js';
+import { GLTFExporter }    from 'three/addons/exporters/GLTFExporter.js';
+import { GLTFLoader }      from 'three/addons/loaders/GLTFLoader.js';
+import { ColladaLoader }   from 'three/addons/loaders/ColladaLoader.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
-const SETTINGS_KEY = 'objcompressor_v4_settings';
-const FSA_SUPPORTED = 'showDirectoryPicker' in window;
+const SKEY = 'objcomp_v5';
+const FSA  = 'showDirectoryPicker' in window;
 
-/* ═══ STATE ═══ */
-// file entry: { name, relPath, origText, origParsed, compText, compParsed, glbSize, origFileHandle? }
-let files = [];
-let activeIdx = -1;
-let wireframe = false;
-let sourceRootName = ''; // folder name of opened directory
+/* ─── STATE ─── */
+let files = [];   // { name, relPath, format, origBytes, origParsed, compParsed, sizes:{obj,dae,glb} }
+let activeIdx = -1, wireframe = false, sourceRoot = '';
 
-/* ═══ SETTINGS ═══ */
-function saveSettings() {
-  try {
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify({
-      chkPrecision: document.getElementById('chkPrecision').checked,
-      sPrecision:   document.getElementById('sPrecision').value,
-      chkWeld:      document.getElementById('chkWeld').checked,
-      sWeld:        document.getElementById('sWeld').value,
-      chkCluster:   document.getElementById('chkCluster').checked,
-      sCluster:     document.getElementById('sCluster').value,
-      wire:         document.getElementById('wireChk').checked,
-    }));
-  } catch(e) {}
+/* ─── SETTINGS ─── */
+const SE = id => document.getElementById(id);
+function saveCfg() {
+  try { localStorage.setItem(SKEY, JSON.stringify({
+    chkP: SE('chkPrecision').checked, sP: SE('sPrecision').value,
+    chkW: SE('chkWeld').checked,      sW: SE('sWeld').value,
+    chkC: SE('chkCluster').checked,   sC: SE('sCluster').value,
+    wire: SE('wireChk').checked, fmt: SE('outFormat').value,
+  })); } catch(e) {}
 }
-function loadSettings() {
+function loadCfg() {
   try {
-    const s = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
-    if (s.chkPrecision !== undefined) document.getElementById('chkPrecision').checked = s.chkPrecision;
-    if (s.sPrecision)   document.getElementById('sPrecision').value   = s.sPrecision;
-    if (s.chkWeld      !== undefined) document.getElementById('chkWeld').checked    = s.chkWeld;
-    if (s.sWeld)        document.getElementById('sWeld').value        = s.sWeld;
-    if (s.chkCluster   !== undefined) document.getElementById('chkCluster').checked = s.chkCluster;
-    if (s.sCluster)     document.getElementById('sCluster').value     = s.sCluster;
-    if (s.wire !== undefined) { document.getElementById('wireChk').checked = s.wire; wireframe = s.wire; }
+    const s = JSON.parse(localStorage.getItem(SKEY)||'{}');
+    if (s.chkP !== undefined) SE('chkPrecision').checked = s.chkP;
+    if (s.sP) SE('sPrecision').value = s.sP;
+    if (s.chkW !== undefined) SE('chkWeld').checked = s.chkW;
+    if (s.sW)  SE('sWeld').value  = s.sW;
+    if (s.chkC !== undefined) SE('chkCluster').checked = s.chkC;
+    if (s.sC)  SE('sCluster').value = s.sC;
+    if (s.wire !== undefined) { SE('wireChk').checked = s.wire; wireframe = s.wire; }
+    if (s.fmt) SE('outFormat').value = s.fmt;
   } catch(e) {}
 }
 
-/* ═══ SHARED CAMERA + CONTROLS ═══ */
-const sharedCam = new THREE.PerspectiveCamera(45, 1, 0.001, 1e6);
-sharedCam.position.set(0, 2, 5);
-const sharedControls = new OrbitControls(sharedCam, document.getElementById('orbitOverlay'));
-sharedControls.enableDamping = true;
-sharedControls.dampingFactor = 0.07;
-sharedControls.screenSpacePanning = false;
+/* ─── SHARED CAMERA ─── */
+const cam = new THREE.PerspectiveCamera(45, 1, 0.001, 1e6);
+cam.position.set(0, 2, 5);
+const ctrl = new OrbitControls(cam, SE('orbitOverlay'));
+ctrl.enableDamping = true;
+ctrl.dampingFactor = 0.08;
+ctrl.screenSpacePanning = true;   // pan in screen space (all axes)
+ctrl.minPolarAngle = 0;           // allow top view
+ctrl.maxPolarAngle = Math.PI;     // allow bottom view — full vertical orbit
+ctrl.mouseButtons = { LEFT: THREE.MOUSE.ROTATE, MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.PAN };
+ctrl.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
 
-/* ═══ RENDERERS ═══ */
-function makeRenderer(canvasId) {
-  const canvas = document.getElementById(canvasId);
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-  renderer.setClearColor(0x0d1117);
+/* ─── RENDERERS ─── */
+function mkRenderer(id) {
+  const canvas = SE(id);
+  const r = new THREE.WebGLRenderer({ canvas, antialias: true });
+  r.setPixelRatio(Math.min(devicePixelRatio, 2));
+  r.setClearColor(0x0d1117);
   const scene = new THREE.Scene();
   scene.add(new THREE.AmbientLight(0xffffff, 0.6));
   const sun = new THREE.DirectionalLight(0xffffff, 1.3); sun.position.set(6,10,6); scene.add(sun);
   const fill = new THREE.DirectionalLight(0x88aaff, 0.4); fill.position.set(-6,-3,-6); scene.add(fill);
   scene.add(new THREE.GridHelper(20, 20, 0x1f2937, 0x161b22));
-  return { canvas, renderer, scene };
+  return { canvas, r, scene };
 }
-const OV = makeRenderer('origCanvas');
-const CV = makeRenderer('compCanvas');
+const OV = mkRenderer('origCanvas');
+const CV = mkRenderer('compCanvas');
 
 (function loop() {
   requestAnimationFrame(loop);
-  sharedControls.update();
-  for (const v of [OV, CV]) {
-    const w = v.canvas.parentElement.clientWidth;
-    const h = v.canvas.parentElement.clientHeight;
-    if (w > 0 && h > 0 && (v.renderer.domElement.width !== w || v.renderer.domElement.height !== h)) {
-      v.renderer.setSize(w, h, false);
-      sharedCam.aspect = w / h;
-      sharedCam.updateProjectionMatrix();
+  ctrl.update();
+  for (const v of [OV,CV]) {
+    const w=v.canvas.parentElement.clientWidth, h=v.canvas.parentElement.clientHeight;
+    if (w>0&&h>0&&(v.r.domElement.width!==w||v.r.domElement.height!==h)) {
+      v.r.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix();
     }
-    v.renderer.render(v.scene, sharedCam);
+    v.r.render(v.scene, cam);
   }
 })();
 
-/* ═══ OBJ PARSER ═══ */
+/* ─── OBJ PARSER ─── */
 function parseOBJ(text) {
-  const pos=[], nor=[], uvs=[], faces=[];
+  const pos=[],nor=[],uvs=[],faces=[];
   for (const raw of text.split('\n')) {
-    const ln=raw.trim(), sp=ln.split(/\s+/), t=sp[0];
-    if (t==='v')        pos.push([+sp[1],+sp[2],+sp[3]]);
-    else if (t==='vn')  nor.push([+sp[1],+sp[2],+sp[3]]);
-    else if (t==='vt')  uvs.push([+sp[1],+sp[2]||0]);
-    else if (t==='f') {
+    const ln=raw.trim(),sp=ln.split(/\s+/),t=sp[0];
+    if(t==='v')        pos.push([+sp[1],+sp[2],+sp[3]]);
+    else if(t==='vn')  nor.push([+sp[1],+sp[2],+sp[3]]);
+    else if(t==='vt')  uvs.push([+sp[1],+sp[2]||0]);
+    else if(t==='f'){
       const vts=sp.slice(1).map(tk=>{const[v,vt,vn]=tk.split('/');return{v:+v-1,vt:vt?+vt-1:-1,vn:vn?+vn-1:-1};});
-      for (let i=1;i<vts.length-1;i++) faces.push([vts[0],vts[i],vts[i+1]]);
+      for(let i=1;i<vts.length-1;i++) faces.push([vts[0],vts[i],vts[i+1]]);
     }
   }
-  return { pos, nor, uvs, faces };
+  return{pos,nor,uvs,faces};
 }
 
-/* ═══ GEOMETRY ═══ */
+/* ─── GEOMETRY ↔ PARSED ─── */
+function geoToParsed(geo) {
+  // toNonIndexed gives us clean triangle soup
+  const g = geo.index ? geo.toNonIndexed() : geo;
+  const pA=g.getAttribute('position'), nA=g.getAttribute('normal'), uA=g.getAttribute('uv');
+  const pos=[],nor=[],uvs=[],faces=[];
+  for(let i=0;i<pA.count;i+=3){
+    const b=pos.length;
+    for(let j=0;j<3;j++){const k=i+j;
+      pos.push([pA.getX(k),pA.getY(k),pA.getZ(k)]);
+      if(nA) nor.push([nA.getX(k),nA.getY(k),nA.getZ(k)]);
+      if(uA) uvs.push([uA.getX(k),uA.getY(k)]);
+    }
+    faces.push([{v:b,vt:uA?b:-1,vn:nA?b:-1},{v:b+1,vt:uA?b+1:-1,vn:nA?b+1:-1},{v:b+2,vt:uA?b+2:-1,vn:nA?b+2:-1}]);
+  }
+  return{pos,nor,uvs,faces};
+}
+
 function buildGeo(parsed) {
-  const {pos,nor,uvs,faces}=parsed, pa=[],na=[],ua=[];
-  for (const face of faces) for (const v of face) {
-    const p=pos[v.v]; if(!p) continue;
+  const{pos,nor,uvs,faces}=parsed,pa=[],na=[],ua=[];
+  for(const face of faces) for(const v of face){
+    const p=pos[v.v];if(!p)continue;
     pa.push(p[0],p[1],p[2]);
     if(v.vn>=0&&nor[v.vn]){const n=nor[v.vn];na.push(n[0],n[1],n[2]);}
     if(v.vt>=0&&uvs[v.vt]){const u=uvs[v.vt];ua.push(u[0],u[1]);}
   }
-  const geo=new THREE.BufferGeometry();
-  geo.setAttribute('position',new THREE.Float32BufferAttribute(pa,3));
-  if(na.length===pa.length) geo.setAttribute('normal',new THREE.Float32BufferAttribute(na,3));
-  else geo.computeVertexNormals();
-  if(ua.length===pa.length/3*2) geo.setAttribute('uv',new THREE.Float32BufferAttribute(ua,2));
-  return geo;
+  const g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.Float32BufferAttribute(pa,3));
+  if(na.length===pa.length) g.setAttribute('normal',new THREE.Float32BufferAttribute(na,3));
+  else g.computeVertexNormals();
+  if(ua.length===pa.length/3*2) g.setAttribute('uv',new THREE.Float32BufferAttribute(ua,2));
+  return g;
 }
 
-function clearMeshes(v) {
-  v.scene.children.filter(o=>o.isMesh).forEach(o=>{o.geometry.dispose();o.material.dispose();v.scene.remove(o);});
+/* ─── LOADERS ─── */
+async function loadDae(text) {
+  return new Promise(res=>{
+    const r=new ColladaLoader(); const col=r.parse(text);
+    const geos=[];
+    col.scene.traverse(o=>{if(o.isMesh&&o.geometry) geos.push(o.geometry.clone());});
+    if(!geos.length){res(null);return;}
+    try{res(geoToParsed(geos.length===1?geos[0]:mergeGeometries(geos,true)));}
+    catch(e){res(geoToParsed(geos[0]));}
+  });
 }
-function addWire(v, geo) {
-  const wm=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color:0x8ec4ff,wireframe:true,transparent:true,opacity:0.55}));
-  wm.userData.isWire=true; v.scene.add(wm);
+async function loadGlb(buf) {
+  return new Promise((res,rej)=>{
+    new GLTFLoader().parse(buf,'',(gltf)=>{
+      const geos=[];
+      gltf.scene.traverse(o=>{if(o.isMesh&&o.geometry) geos.push(o.geometry.clone());});
+      if(!geos.length){rej(new Error('Brak geometrii'));return;}
+      try{res(geoToParsed(geos.length===1?geos[0]:mergeGeometries(geos,true)));}
+      catch(e){res(geoToParsed(geos[0]));}
+    },rej);
+  });
 }
-function loadToViewer(v, parsed, hintId, fitCam=true) {
+
+/* ─── VIEWER ─── */
+function clearMeshes(v){v.scene.children.filter(o=>o.isMesh).forEach(o=>{o.geometry.dispose();o.material.dispose();v.scene.remove(o);});}
+function addWire(v,geo){const wm=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color:0x8ec4ff,wireframe:true,transparent:true,opacity:0.55}));wm.userData.isWire=true;v.scene.add(wm);}
+function loadToViewer(v,parsed,hintId,fitCam=true){
   clearMeshes(v);
-  const hint=document.getElementById(hintId);
-  if(!parsed||!parsed.faces.length){hint.style.display='';return null;}
+  const hint=SE(hintId);
+  if(!parsed||!parsed.faces.length){hint.style.display='';return;}
   hint.style.display='none';
   const geo=buildGeo(parsed);
   geo.computeBoundingBox();
-  const c=new THREE.Vector3(); geo.boundingBox.getCenter(c);
-  geo.translate(-c.x,-c.y,-c.z);
-  const mat=new THREE.MeshStandardMaterial({
-    color:0x4a9eff,roughness:0.55,metalness:0.08,side:THREE.DoubleSide,
-    polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1,
-  });
-  const mesh=new THREE.Mesh(geo,mat); v.scene.add(mesh);
+  const c=new THREE.Vector3();geo.boundingBox.getCenter(c);geo.translate(-c.x,-c.y,-c.z);
+  const mat=new THREE.MeshStandardMaterial({color:0x4a9eff,roughness:0.55,metalness:0.08,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
+  v.scene.add(new THREE.Mesh(geo,mat));
   if(wireframe) addWire(v,geo);
   if(fitCam){
     geo.computeBoundingSphere();
-    const r=geo.boundingSphere.radius||1, d=r*3.0;
-    sharedCam.position.set(d*0.6,d*0.45,d);
-    sharedControls.target.set(0,0,0); sharedControls.update();
+    const r=(geo.boundingSphere.radius||1)*3.0;
+    cam.position.set(r*0.6,r*0.45,r);ctrl.target.set(0,0,0);ctrl.update();
   }
-  return mesh;
 }
-
-/* ═══ WIREFRAME ═══ */
-document.getElementById('wireChk').addEventListener('change', e=>{
+SE('wireChk').addEventListener('change',e=>{
   wireframe=e.target.checked;
-  for (const v of [OV,CV]) {
+  for(const v of [OV,CV]){
     v.scene.children.filter(o=>o.userData.isWire).forEach(o=>{o.geometry.dispose();o.material.dispose();v.scene.remove(o);});
     if(wireframe) v.scene.children.filter(o=>o.isMesh&&!o.userData.isWire).forEach(m=>addWire(v,m.geometry));
   }
-  saveSettings();
+  saveCfg();
 });
 
-/* ═══ SLIDER MATH ═══ */
-function precisionDecimals(v){ return Math.round((1-v/100)*6); }
-function weldThreshold(v){ return v===0 ? 0 : 0.000002*Math.pow(50000,v/100); }
-function clusterGrid(v){ return Math.round(Math.exp(Math.log(512)-(Math.log(512)-Math.log(4))*v/100)); }
-
-function refreshLabels() {
-  const vP=+document.getElementById('sPrecision').value;
-  const dP=precisionDecimals(vP);
-  document.getElementById('vPrecision').textContent = dP===6?'6 miejsc (brak zmiany)':`${dP} miejsc dziesiętnych`;
-  const vW=+document.getElementById('sWeld').value;
-  document.getElementById('vWeld').textContent = vW===0?'wyłączony':`próg: ${(weldThreshold(vW)*100).toFixed(5)}% przekątnej`;
-  const vC=+document.getElementById('sCluster').value;
-  document.getElementById('vCluster').textContent = `siatka: ${clusterGrid(vC)}³ komórek`;
+/* ─── SLIDER MATH ─── */
+function precDec(v){return Math.round((1-v/100)*6);}
+function weldThr(v){return v===0?0:0.000002*Math.pow(50000,v/100);}
+function clustG(v){return Math.round(Math.exp(Math.log(512)-(Math.log(512)-Math.log(4))*v/100));}
+function refreshLabels(){
+  const vP=+SE('sPrecision').value,dP=precDec(vP);
+  SE('vPrecision').textContent=dP===6?'6 miejsc (brak)':''+dP+' miejsc dziesiętnych';
+  const vW=+SE('sWeld').value;
+  SE('vWeld').textContent=vW===0?'wyłączony':'próg: '+(weldThr(vW)*100).toFixed(5)+'% przekątnej';
+  const vC=+SE('sCluster').value;
+  SE('vCluster').textContent='siatka: '+clustG(vC)+'³ komórek';
 }
-['sPrecision','sWeld','sCluster'].forEach(id=>
-  document.getElementById(id).addEventListener('input',()=>{refreshLabels();saveSettings();}));
-['chkPrecision','chkWeld','chkCluster','wireChk'].forEach(id=>
-  document.getElementById(id).addEventListener('change',saveSettings));
+['sPrecision','sWeld','sCluster'].forEach(id=>SE(id).addEventListener('input',()=>{refreshLabels();saveCfg();}));
+['chkPrecision','chkWeld','chkCluster','wireChk','outFormat'].forEach(id=>SE(id).addEventListener('change',saveCfg));
 
-/* ═══ COMPRESSION ═══ */
+/* ─── COMPRESSION ─── */
 function reducePrecision(text,d){
   return text.split('\n').map(l=>{const t=l.trim();
     if(t.startsWith('v ')||t.startsWith('vn ')||t.startsWith('vt ')){
-      const p=t.split(/\s+/); return p[0]+' '+p.slice(1).map(n=>{const f=parseFloat(n);return isNaN(f)?n:f.toFixed(d);}).join(' ');
-    } return l;}).join('\n');
+      const p=t.split(/\s+/);return p[0]+' '+p.slice(1).map(n=>{const f=parseFloat(n);return isNaN(f)?n:f.toFixed(d);}).join(' ');
+    }return l;}).join('\n');
 }
-function weldVertices(parsed,thr){
-  const{pos,nor,uvs,faces}=parsed; if(thr<=0) return parsed;
+function weld(parsed,thr){
+  const{pos,nor,uvs,faces}=parsed;if(thr<=0)return parsed;
   let[mnX,mnY,mnZ,mxX,mxY,mxZ]=[1e9,1e9,1e9,-1e9,-1e9,-1e9];
   for(const[x,y,z]of pos){if(x<mnX)mnX=x;if(x>mxX)mxX=x;if(y<mnY)mnY=y;if(y>mxY)mxY=y;if(z<mnZ)mnZ=z;if(z>mxZ)mxZ=z;}
-  const diag=Math.sqrt((mxX-mnX)**2+(mxY-mnY)**2+(mxZ-mnZ)**2)||1;
-  const cs=thr*diag, map=new Map(), newPos=[], remap=new Int32Array(pos.length);
-  for(let i=0;i<pos.length;i++){
-    const[x,y,z]=pos[i];
-    const key=`${Math.floor(x/cs)},${Math.floor(y/cs)},${Math.floor(z/cs)}`;
-    if(map.has(key)){remap[i]=map.get(key);}else{const idx=newPos.length;map.set(key,idx);remap[i]=idx;newPos.push([x,y,z]);}
-  }
-  const nf=[];
-  for(const face of faces){const a=remap[face[0].v],b=remap[face[1].v],c=remap[face[2].v];
-    if(a!==b&&b!==c&&a!==c) nf.push(face.map(v=>({...v,v:remap[v.v]})));}
+  const diag=Math.sqrt((mxX-mnX)**2+(mxY-mnY)**2+(mxZ-mnZ)**2)||1,cs=thr*diag;
+  const map=new Map(),newPos=[],remap=new Int32Array(pos.length);
+  for(let i=0;i<pos.length;i++){const[x,y,z]=pos[i];const key=`${Math.floor(x/cs)},${Math.floor(y/cs)},${Math.floor(z/cs)}`;
+    if(map.has(key)){remap[i]=map.get(key);}else{const idx=newPos.length;map.set(key,idx);remap[i]=idx;newPos.push([x,y,z]);}}
+  const nf=[];for(const face of faces){const a=remap[face[0].v],b=remap[face[1].v],c=remap[face[2].v];
+    if(a!==b&&b!==c&&a!==c)nf.push(face.map(v=>({...v,v:remap[v.v]})));}
   return{pos:newPos,nor,uvs,faces:nf};
 }
-function clusterSimplify(parsed,g){
-  const{pos,faces}=parsed; if(!pos.length) return parsed;
+function cluster(parsed,g){
+  const{pos,faces}=parsed;if(!pos.length)return parsed;
   let[mnX,mnY,mnZ,mxX,mxY,mxZ]=[1e9,1e9,1e9,-1e9,-1e9,-1e9];
   for(const[x,y,z]of pos){if(x<mnX)mnX=x;if(x>mxX)mxX=x;if(y<mnY)mnY=y;if(y>mxY)mxY=y;if(z<mnZ)mnZ=z;if(z>mxZ)mxZ=z;}
   const rx=(mxX-mnX)||1,ry=(mxY-mnY)||1,rz=(mxZ-mnZ)||1;
-  const cellMap=new Map(),remap=new Int32Array(pos.length);
-  for(let i=0;i<pos.length;i++){
-    const[x,y,z]=pos[i];
+  const cm=new Map(),remap=new Int32Array(pos.length);
+  for(let i=0;i<pos.length;i++){const[x,y,z]=pos[i];
     const key=`${Math.min(Math.floor((x-mnX)/rx*g),g-1)}_${Math.min(Math.floor((y-mnY)/ry*g),g-1)}_${Math.min(Math.floor((z-mnZ)/rz*g),g-1)}`;
-    if(!cellMap.has(key))cellMap.set(key,{s:[0,0,0],n:0,idx:cellMap.size});
-    const c=cellMap.get(key);c.s[0]+=x;c.s[1]+=y;c.s[2]+=z;c.n++;remap[i]=c.idx;
-  }
-  const newPos=Array.from(cellMap.values()).map(c=>[c.s[0]/c.n,c.s[1]/c.n,c.s[2]/c.n]);
-  const nf=[];
-  for(const face of faces){const a=remap[face[0].v],b=remap[face[1].v],c=remap[face[2].v];
-    if(a!==b&&b!==c&&a!==c) nf.push(face.map(v=>({v:remap[v.v],vt:-1,vn:-1})));}
+    if(!cm.has(key))cm.set(key,{s:[0,0,0],n:0,idx:cm.size});const c=cm.get(key);c.s[0]+=x;c.s[1]+=y;c.s[2]+=z;c.n++;remap[i]=c.idx;}
+  const newPos=Array.from(cm.values()).map(c=>[c.s[0]/c.n,c.s[1]/c.n,c.s[2]/c.n]);
+  const nf=[];for(const face of faces){const a=remap[face[0].v],b=remap[face[1].v],c=remap[face[2].v];
+    if(a!==b&&b!==c&&a!==c)nf.push(face.map(v=>({v:remap[v.v],vt:-1,vn:-1})));}
   return{pos:newPos,nor:[],uvs:[],faces:nf};
 }
-function applyCompression(origText,origParsed){
+function doCompress(origText,origParsed){
   let text=origText,parsed=origParsed;
-  if(document.getElementById('chkPrecision').checked){const d=precisionDecimals(+document.getElementById('sPrecision').value);text=reducePrecision(text,d);parsed=parseOBJ(text);}
-  if(document.getElementById('chkWeld').checked){const thr=weldThreshold(+document.getElementById('sWeld').value);parsed=weldVertices(parsed,thr);text=toOBJText(parsed);}
-  if(document.getElementById('chkCluster').checked){const g=clusterGrid(+document.getElementById('sCluster').value);parsed=clusterSimplify(parsed,g);text=toOBJText(parsed);}
+  if(SE('chkPrecision').checked){const d=precDec(+SE('sPrecision').value);text=reducePrecision(text,d);parsed=parseOBJ(text);}
+  if(SE('chkWeld').checked){parsed=weld(parsed,weldThr(+SE('sWeld').value));text=toOBJ(parsed);}
+  if(SE('chkCluster').checked){parsed=cluster(parsed,clustG(+SE('sCluster').value));text=toOBJ(parsed);}
   return{compText:text,compParsed:parsed};
 }
 
-/* ═══ OBJ SERIALIZER ═══ */
-function toOBJText(p){
-  const l=['# OBJ Compressor'];
-  for(const v of p.pos) l.push(`v ${v[0]} ${v[1]} ${v[2]}`);
-  for(const n of p.nor) l.push(`vn ${n[0]} ${n[1]} ${n[2]}`);
-  for(const u of p.uvs) l.push(`vt ${u[0]} ${u[1]}`);
+/* ─── SERIALIZERS ─── */
+function toOBJ(p){
+  const l=['# 3D Compressor'];
+  for(const v of p.pos)l.push(`v ${v[0]} ${v[1]} ${v[2]}`);
+  for(const n of p.nor)l.push(`vn ${n[0]} ${n[1]} ${n[2]}`);
+  for(const u of p.uvs)l.push(`vt ${u[0]} ${u[1]}`);
   for(const face of p.faces){
     const hUV=face.some(v=>v.vt>=0),hN=face.some(v=>v.vn>=0);
     l.push('f '+face.map(v=>hN&&hUV?`${v.v+1}/${v.vt+1}/${v.vn+1}`:hN?`${v.v+1}//${v.vn+1}`:hUV?`${v.v+1}/${v.vt+1}`:`${v.v+1}`).join(' '));
-  }
-  return l.join('\n');
+  }return l.join('\n');
 }
 
-/* ═══ HELPERS ═══ */
-function fmtSize(b){return b>1048576?(b/1048576).toFixed(2)+' MB':(b/1024).toFixed(1)+' KB';}
-function blobSize(s){return new Blob([s]).size;}
-function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),600);}
-function setProgress(msg){const p=document.getElementById('progress');p.textContent=msg;p.style.display=msg?'block':'none';}
-function confirm_(title,msg){
-  return new Promise(resolve=>{
-    document.getElementById('confirmMsg').textContent=msg;
-    const overlay=document.getElementById('confirmOverlay');
-    overlay.classList.add('show');
-    const ok=document.getElementById('confirmOk');
-    const cancel=document.getElementById('confirmCancel');
-    const cleanup=val=>{overlay.classList.remove('show');ok.onclick=null;cancel.onclick=null;resolve(val);};
-    ok.onclick=()=>cleanup(true);
-    cancel.onclick=()=>cleanup(false);
+function toDAE(parsed,meshName='Mesh'){
+  const{pos,nor,faces}=parsed;
+  const triPos=[],triNor=[];
+  for(const face of faces)for(const v of face){
+    const p=pos[v.v];triPos.push(p[0],p[1],p[2]);
+    if(nor.length&&v.vn>=0&&nor[v.vn]){const n=nor[v.vn];triNor.push(n[0],n[1],n[2]);}
+  }
+  const vc=triPos.length/3,fc=faces.length;
+  const idx=Array.from({length:vc},(_,i)=>i).join(' ');
+  const norSrc=triNor.length?`<source id="${meshName}-normals"><float_array id="${meshName}-normals-array" count="${triNor.length}">${triNor.join(' ')}</float_array><technique_common><accessor source="#${meshName}-normals-array" count="${vc}" stride="3"><param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/></accessor></technique_common></source>`:'';
+  const norInput=triNor.length?`<input semantic="NORMAL" source="#${meshName}-normals" offset="0"/>`:'';
+  const dt=new Date().toISOString();
+  return`<?xml version="1.0" encoding="utf-8"?>\n<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">\n<asset><created>${dt}</created><modified>${dt}</modified><unit name="meter" meter="1"/><up_axis>Y_UP</up_axis></asset>\n<library_geometries><geometry id="${meshName}-mesh" name="${meshName}"><mesh>\n<source id="${meshName}-positions"><float_array id="${meshName}-positions-array" count="${triPos.length}">${triPos.join(' ')}</float_array><technique_common><accessor source="#${meshName}-positions-array" count="${vc}" stride="3"><param name="X" type="float"/><param name="Y" type="float"/><param name="Z" type="float"/></accessor></technique_common></source>\n${norSrc}\n<vertices id="${meshName}-vertices"><input semantic="POSITION" source="#${meshName}-positions"/></vertices>\n<triangles count="${fc}"><input semantic="VERTEX" source="#${meshName}-vertices" offset="0"/>${norInput}<p>${idx}</p></triangles>\n</mesh></geometry></library_geometries>\n<library_visual_scenes><visual_scene id="Scene" name="Scene"><node id="${meshName}" name="${meshName}" type="NODE"><instance_geometry url="#${meshName}-mesh"/></node></visual_scene></library_visual_scenes>\n<scene><instance_visual_scene url="#Scene"/></scene>\n</COLLADA>`;
+}
+
+function exportGLB(parsed){
+  return new Promise((res,rej)=>{
+    const geo=buildGeo(parsed),mat=new THREE.MeshStandardMaterial({color:0x4a9eff,roughness:0.55,metalness:0.08});
+    const s=new THREE.Scene();s.add(new THREE.Mesh(geo,mat));
+    new GLTFExporter().parse(s,b=>res(new Blob([b],{type:'model/gltf-binary'})),rej,{binary:true});
   });
 }
 
-/* ═══ FILE SYSTEM ACCESS — write file into dir handle ═══ */
-async function fsa_writeFile(rootDirHandle, relPath, content) {
-  const parts = relPath.replace(/\\/g,'/').split('/').filter(Boolean);
-  let dir = rootDirHandle;
-  for (let i = 0; i < parts.length - 1; i++) {
-    dir = await dir.getDirectoryHandle(parts[i], { create: true });
-  }
-  const fh = await dir.getFileHandle(parts[parts.length-1], { create: true });
-  const w = await fh.createWritable();
-  await w.write(content);
-  await w.close();
+/* ─── SIZE HELPERS ─── */
+function fmtB(b){return b===0?'–':b>1048576?(b/1048576).toFixed(2)+' MB':(b/1024).toFixed(1)+' KB';}
+function blobSz(s){return new Blob([s]).size;}
+
+/* ─── ASYNC SIZE COMPUTE ─── */
+async function computeSizes(f){
+  if(!f.compParsed) return;
+  f.sizes = f.sizes||{obj:0,dae:0,glb:0};
+  const objTxt=toOBJ(f.compParsed);  f.sizes.obj=blobSz(objTxt);
+  const daeTxt=toDAE(f.compParsed);  f.sizes.dae=blobSz(daeTxt);
+  try{const b=await exportGLB(f.compParsed);f.sizes.glb=b.size;}catch(e){}
+  if(files[activeIdx]===f) updateCompStats(f);
+  renderList();
 }
 
-/* ═══ SAVE TO FOLDER (OBJ or GLB) ═══ */
-async function saveToFolder(format) {
-  const todo = files.filter(f => f.compText);
-  if (!todo.length) return;
-  if (!FSA_SUPPORTED) { alert('Twoja przeglądarka nie obsługuje File System Access API.\nUżyj przycisku „Pobierz wszystkie".'); return; }
-  let dirHandle;
-  try { dirHandle = await window.showDirectoryPicker({ mode:'readwrite' }); }
-  catch(e) { return; } // user cancelled
-
-  setProgress(`⏳ Zapisywanie ${todo.length} plików do folderu…`);
-  let ok=0, err=0;
-  for (let i=0; i<todo.length; i++) {
-    const f = todo[i];
-    setProgress(`${format==='glb'?'⚡':'💾'} ${i+1}/${todo.length}: ${f.name}`);
-    try {
-      // relative path without root folder name (strip first segment)
-      const rel = stripRoot(f.relPath);
-      if (format === 'obj') {
-        await fsa_writeFile(dirHandle, rel, f.compText);
-      } else {
-        const blob = await exportGLBBlob(f.compParsed);
-        f.glbSize = blob.size;
-        const glbRel = rel.replace(/\.obj$/i, '.glb');
-        const buf = await blob.arrayBuffer();
-        await fsa_writeFile(dirHandle, glbRel, buf);
-      }
-      ok++;
-    } catch(e) { console.warn(f.name, e); err++; }
-  }
-  renderFileList();
-  if (activeIdx>=0 && files[activeIdx].compParsed) updateCompStats(files[activeIdx]);
-  setProgress('');
-  alert(`Zapisano: ${ok} plików${err?`, błędy: ${err}`:''}`);
+/* ─── UI STATS ─── */
+function updateCompStats(f){
+  const oSz=f.origBytes,cSz=f.sizes?.obj||0;
+  const ratio=oSz&&cSz?((1-cSz/oSz)*100).toFixed(1):'–';
+  SE('cV').textContent=`v ${f.compParsed.pos.length.toLocaleString('pl')}`;
+  SE('cF').textContent=`f ${f.compParsed.faces.length.toLocaleString('pl')}`;
+  const sObj=SE('cObj'),sDae=SE('cDae'),sGlb=SE('cGlb');
+  sObj.textContent='OBJ '+(f.sizes?.obj?fmtB(f.sizes.obj):'…'); sObj.className=f.sizes?.obj?'chip green':'chip';
+  sDae.textContent='DAE '+(f.sizes?.dae?fmtB(f.sizes.dae):'…'); sDae.className=f.sizes?.dae?'chip gold':'chip';
+  sGlb.textContent='GLB '+(f.sizes?.glb?fmtB(f.sizes.glb):'…'); sGlb.className=f.sizes?.glb?'chip purple':'chip';
+  const badge=SE('badge');badge.textContent=`−${ratio}%`;badge.classList.add('show');
 }
 
-/* ═══ OVERWRITE ORIGINALS ═══ */
-async function overwriteOriginals() {
-  const todo = files.filter(f => f.compText);
-  if (!todo.length) return;
-  if (!FSA_SUPPORTED) { alert('Twoja przeglądarka nie obsługuje File System Access API.'); return; }
-  const confirmed = await confirm_(
-    '⚠️ Nadpisanie oryginałów',
-    `Zostanie nadpisanych ${todo.length} plików .OBJ w wybranym folderze. Operacja jest nieodwracalna. Wskaż folder źródłowy "${sourceRootName}" lub dowolny katalog docelowy.`
-  );
-  if (!confirmed) return;
-  let dirHandle;
-  try { dirHandle = await window.showDirectoryPicker({ mode:'readwrite' }); }
-  catch(e) { return; }
-
-  setProgress(`⏳ Nadpisywanie ${todo.length} plików…`);
-  let ok=0, err=0;
-  for (let i=0; i<todo.length; i++) {
-    const f = todo[i];
-    setProgress(`⚠️ ${i+1}/${todo.length}: ${f.name}`);
-    try {
-      const rel = stripRoot(f.relPath);
-      await fsa_writeFile(dirHandle, rel, f.compText);
-      ok++;
-    } catch(e) { console.warn(f.name, e); err++; }
-  }
-  setProgress('');
-  alert(`Nadpisano: ${ok} plików${err?`, błędy: ${err}`:''}.`);
+function clearCompStats(){
+  ['cV','cF'].forEach(id=>SE(id).textContent='–');
+  ['cObj','cDae','cGlb'].forEach(id=>{SE(id).className='chip';SE(id).textContent=id.replace('c','');});
+  SE('badge').classList.remove('show');
 }
 
-function stripRoot(relPath) {
-  // webkitRelativePath = "rootFolder/sub/file.obj" — strip first segment
-  const parts = relPath.replace(/\\/g,'/').split('/');
-  return parts.length > 1 ? parts.slice(1).join('/') : relPath;
-}
+/* ─── FILE LIST ─── */
+function stripRoot(rp){const p=rp.replace(/\\/g,'/').split('/');return p.length>1?p.slice(1).join('/'):rp;}
+function fmtTag(fmt){return `<span class="ftag ${fmt}">${fmt.toUpperCase()}</span>`;}
 
-/* ═══ GLB ═══ */
-function exportGLBBlob(parsed) {
-  return new Promise((res,rej)=>new GLTFExporter().parse(
-    (()=>{const g=buildGeo(parsed),m=new THREE.MeshStandardMaterial({color:0x4a9eff,roughness:0.55,metalness:0.08});const s=new THREE.Scene();s.add(new THREE.Mesh(g,m));return s;})(),
-    b=>res(new Blob([b],{type:'model/gltf-binary'})),rej,{binary:true}));
-}
-
-/* ═══ FILE LIST RENDER ═══ */
-function renderFileList() {
-  const list=document.getElementById('fileList');
-  document.getElementById('fileCount').textContent=files.length;
+function renderList(){
+  const list=SE('fileList');
+  SE('fileCount').textContent=files.length;
   list.innerHTML='';
   files.forEach((f,i)=>{
     const div=document.createElement('div');
     div.className='file-item'+(i===activeIdx?' active':'');
-    const done=!!f.compText;
-    // show subpath if available
-    const subPath = stripRoot(f.relPath);
-    const dirPart = subPath.includes('/') ? subPath.split('/').slice(0,-1).join('/') : '';
-    div.innerHTML=`<div class="finfo">
-      <div class="fname" title="${f.relPath}">${f.name}</div>
-      ${dirPart?`<div class="fpath">${dirPart}</div>`:''}
-    </div>
-    <span class="fstatus ${done?'':'pending'}">${done?'✓ '+fmtSize(blobSize(f.compText)):'—'}</span>`;
+    const sub=stripRoot(f.relPath);
+    const dirPart=sub.includes('/')?sub.split('/').slice(0,-1).join('/'):'';
+    const done=f.sizes?.obj;
+    div.innerHTML=`<div class="finfo"><div class="fname" title="${f.relPath}">${f.name}</div>${dirPart?`<div class="fpath">${dirPart}</div>`:''}</div>${fmtTag(f.format)}<span class="fstatus ${done?'':'pending'}">${done?'✓':'—'}</span>`;
     div.addEventListener('click',()=>selectFile(i));
     list.appendChild(div);
   });
-  document.getElementById('removeFileBtn').disabled=activeIdx<0;
-  const anyComp=files.some(f=>f.compText);
-  ['exportAllOBJ','exportAllGLB','saveFolderOBJ','saveFolderGLB','overwriteOBJ'].forEach(id=>
-    document.getElementById(id).disabled=!anyComp);
-  document.getElementById('applyAllBtn').disabled=files.length===0;
+  SE('removeFileBtn').disabled=activeIdx<0;
+  const any=files.some(f=>f.compParsed);
+  ['exportSingle','exportAllDown','saveFolderBtn','overwriteBtn'].forEach(id=>SE(id).disabled=!any);
+  SE('applyAllBtn').disabled=files.length===0;
 }
 
-function updateCompStats(f) {
-  const oSz=blobSize(f.origText),cSz=blobSize(f.compText);
-  const ratio=((1-cSz/oSz)*100).toFixed(1);
-  document.getElementById('cV').textContent=`v ${f.compParsed.pos.length.toLocaleString('pl')}`;
-  document.getElementById('cF').textContent=`f ${f.compParsed.faces.length.toLocaleString('pl')}`;
-  const cSEl=document.getElementById('cS'); cSEl.textContent=`OBJ: ${fmtSize(cSz)}`; cSEl.className='chip green';
-  const cGEl=document.getElementById('cG');
-  if(f.glbSize){cGEl.textContent=`GLB: ${fmtSize(f.glbSize)}`;cGEl.className='chip purple';}
-  else{cGEl.textContent='GLB: –';cGEl.className='chip';}
-  const badge=document.getElementById('badge'); badge.textContent=`−${ratio}%`; badge.classList.add('show');
-}
-
-function selectFile(idx) {
-  activeIdx=idx; const f=files[idx];
+function selectFile(idx){
+  activeIdx=idx;const f=files[idx];
   loadToViewer(OV,f.origParsed,'origHint',true);
-  document.getElementById('oV').textContent=`v ${f.origParsed.pos.length.toLocaleString('pl')}`;
-  document.getElementById('oF').textContent=`f ${f.origParsed.faces.length.toLocaleString('pl')}`;
-  document.getElementById('oS').textContent=fmtSize(blobSize(f.origText));
+  SE('oV').textContent=`v ${f.origParsed.pos.length.toLocaleString('pl')}`;
+  SE('oF').textContent=`f ${f.origParsed.faces.length.toLocaleString('pl')}`;
+  SE('oS').textContent=fmtB(f.origBytes);
   if(f.compParsed){loadToViewer(CV,f.compParsed,'compHint',false);updateCompStats(f);}
-  else{
-    loadToViewer(CV,null,'compHint');
-    ['cV','cF'].forEach(id=>document.getElementById(id).textContent='–');
-    document.getElementById('cS').textContent='OBJ: –';document.getElementById('cS').className='chip';
-    document.getElementById('cG').textContent='GLB: –';document.getElementById('cG').className='chip';
-    document.getElementById('badge').classList.remove('show');
-  }
-  document.getElementById('applyBtn').disabled=false;
-  document.getElementById('exportOBJ').disabled=!f.compText;
-  document.getElementById('exportGLB').disabled=!f.compText;
-  renderFileList();
+  else{loadToViewer(CV,null,'compHint');clearCompStats();}
+  SE('applyBtn').disabled=false;
+  renderList();
 }
 
-/* ═══ LOAD FILES HELPER ═══ */
-function loadFileObjects(fileArr) {
-  if(!fileArr.length) return;
+/* ─── OPEN FILES ─── */
+async function ingestFiles(fileArr){
+  if(!fileArr.length)return;
   let done=0;
-  fileArr.forEach(file=>{
-    const r=new FileReader();
-    r.onload=ev=>{
-      const origText=ev.target.result;
-      // webkitRelativePath available for folder input, else just name
-      const relPath=file.webkitRelativePath||file.name;
-      files.push({name:file.name, relPath, origText, origParsed:parseOBJ(origText), compText:'', compParsed:null, glbSize:0});
-      if(++done===fileArr.length){
-        activeIdx=files.length-fileArr.length;
-        selectFile(activeIdx); renderFileList();
+  for(const file of fileArr){
+    const ext=file.name.split('.').pop().toLowerCase();
+    const relPath=file.webkitRelativePath||file.name;
+    if(!['obj','dae','glb','gltf'].includes(ext)){done++;continue;}
+    try{
+      let parsed=null,bytes=file.size;
+      if(ext==='obj'||ext==='dae'){
+        const text=await file.text();
+        bytes=new Blob([text]).size;
+        parsed=ext==='obj'?parseOBJ(text):await loadDae(text);
+      }else{
+        const buf=await file.arrayBuffer();
+        bytes=buf.byteLength;
+        parsed=await loadGlb(buf);
       }
-    };
-    r.readAsText(file);
-  });
+      if(parsed&&parsed.faces.length){
+        const fmt=ext==='gltf'?'glb':ext;
+        files.push({name:file.name,relPath,format:fmt,origBytes:bytes,origParsed:parsed,compParsed:null,sizes:null});
+      }
+    }catch(e){console.warn(file.name,e);}
+    done++;
+    if(done===fileArr.length){
+      activeIdx=files.length-(fileArr.filter(f=>['obj','dae','glb','gltf'].includes(f.name.split('.').pop().toLowerCase())).length);
+      if(activeIdx>=files.length)activeIdx=files.length-1;
+      if(activeIdx>=0)selectFile(activeIdx);
+      renderList();
+    }
+  }
 }
 
-/* ═══ FILE / FOLDER OPEN ═══ */
-document.getElementById('fileInput').addEventListener('change',e=>{
-  const arr=Array.from(e.target.files).filter(f=>f.name.toLowerCase().endsWith('.obj'));
-  sourceRootName='';
-  loadFileObjects(arr); e.target.value='';
+SE('fileInput').addEventListener('change',async e=>{
+  sourceRoot='';
+  await ingestFiles(Array.from(e.target.files));
+  e.target.value='';
 });
-document.getElementById('folderInput').addEventListener('change',e=>{
-  const arr=Array.from(e.target.files).filter(f=>f.name.toLowerCase().endsWith('.obj'));
-  if(arr.length && arr[0].webkitRelativePath) {
-    sourceRootName=arr[0].webkitRelativePath.split('/')[0];
-  }
-  loadFileObjects(arr); e.target.value='';
+SE('folderInput').addEventListener('change',async e=>{
+  const arr=Array.from(e.target.files);
+  if(arr.length&&arr[0].webkitRelativePath) sourceRoot=arr[0].webkitRelativePath.split('/')[0];
+  await ingestFiles(arr);
+  e.target.value='';
 });
 
-/* ═══ REMOVE ═══ */
-document.getElementById('removeFileBtn').addEventListener('click',()=>{
-  if(activeIdx<0) return;
+/* ─── REMOVE ─── */
+SE('removeFileBtn').addEventListener('click',()=>{
+  if(activeIdx<0)return;
   files.splice(activeIdx,1);
-  if(!files.length){
-    activeIdx=-1; clearMeshes(OV); clearMeshes(CV);
-    document.getElementById('origHint').style.display='';
-    document.getElementById('compHint').style.display='';
-    ['applyBtn','exportOBJ','exportGLB'].forEach(id=>document.getElementById(id).disabled=true);
-    document.getElementById('badge').classList.remove('show');
-  } else { activeIdx=Math.min(activeIdx,files.length-1); selectFile(activeIdx); }
-  renderFileList();
+  if(!files.length){activeIdx=-1;clearMeshes(OV);clearMeshes(CV);SE('origHint').style.display='';SE('compHint').style.display='';SE('applyBtn').disabled=true;clearCompStats();}
+  else{activeIdx=Math.min(activeIdx,files.length-1);selectFile(activeIdx);}
+  renderList();
 });
 
-/* ═══ APPLY ═══ */
-document.getElementById('applyBtn').addEventListener('click',()=>{
-  if(activeIdx<0) return;
-  setProgress('⏳ Kompresja…');
-  setTimeout(async()=>{
+/* ─── APPLY ─── */
+function runCompress(f){
+  const objTxt=toOBJ(f.origParsed);
+  const{compParsed}=doCompress(objTxt,f.origParsed);
+  f.compParsed=compParsed;f.sizes=null;
+  return f;
+}
+
+SE('applyBtn').addEventListener('click',()=>{
+  if(activeIdx<0)return;
+  setP('⏳ Kompresja…');
+  setTimeout(()=>{
     try{
-      const f=files[activeIdx];
-      const{compText,compParsed}=applyCompression(f.origText,f.origParsed);
-      f.compText=compText;f.compParsed=compParsed;f.glbSize=0;
-      loadToViewer(CV,compParsed,'compHint',false);
-      updateCompStats(f);
-      document.getElementById('exportOBJ').disabled=false;
-      document.getElementById('exportGLB').disabled=false;
-      renderFileList();
-      exportGLBBlob(compParsed).then(b=>{f.glbSize=b.size;if(files[activeIdx]===f)updateCompStats(f);renderFileList();}).catch(()=>{});
+      const f=files[activeIdx];runCompress(f);
+      loadToViewer(CV,f.compParsed,'compHint',false);
+      f.sizes={obj:0,dae:0,glb:0};
+      const objTxt=toOBJ(f.compParsed);f.sizes.obj=blobSz(objTxt);
+      const daeTxt=toDAE(f.compParsed);f.sizes.dae=blobSz(daeTxt);
+      updateCompStats(f);renderList();
+      SE('exportSingle').disabled=false;SE('exportAllDown').disabled=false;
+      SE('saveFolderBtn').disabled=false;SE('overwriteBtn').disabled=false;
+      exportGLB(f.compParsed).then(b=>{f.sizes.glb=b.size;if(files[activeIdx]===f)updateCompStats(f);renderList();}).catch(()=>{});
     }catch(e){alert('Błąd: '+e.message);}
-    setProgress('');
+    setP('');
   },30);
 });
 
-document.getElementById('applyAllBtn').addEventListener('click',async()=>{
-  if(!files.length) return;
+SE('applyAllBtn').addEventListener('click',async()=>{
+  if(!files.length)return;
   for(let i=0;i<files.length;i++){
-    setProgress(`⏳ Kompresja ${i+1}/${files.length}: ${files[i].name}`);
+    setP(`⏳ ${i+1}/${files.length}: ${files[i].name}`);
     await new Promise(r=>setTimeout(r,10));
     try{
-      const f=files[i];
-      const{compText,compParsed}=applyCompression(f.origText,f.origParsed);
-      f.compText=compText;f.compParsed=compParsed;f.glbSize=0;
-      exportGLBBlob(compParsed).then(b=>{f.glbSize=b.size;renderFileList();}).catch(()=>{});
+      const f=files[i];runCompress(f);
+      f.sizes={obj:0,dae:0,glb:0};
+      f.sizes.obj=blobSz(toOBJ(f.compParsed));
+      f.sizes.dae=blobSz(toDAE(f.compParsed));
+      exportGLB(f.compParsed).then(b=>{f.sizes.glb=b.size;renderList();}).catch(()=>{});
     }catch(e){}
   }
   if(activeIdx>=0&&files[activeIdx].compParsed){
     loadToViewer(CV,files[activeIdx].compParsed,'compHint',false);
     updateCompStats(files[activeIdx]);
-    document.getElementById('exportOBJ').disabled=false;
-    document.getElementById('exportGLB').disabled=false;
   }
-  renderFileList(); setProgress('');
+  renderList();setP('');
 });
 
-/* ═══ EXPORT SINGLE ═══ */
-document.getElementById('exportOBJ').addEventListener('click',()=>{
-  if(activeIdx<0) return; const f=files[activeIdx]; if(!f.compText) return;
-  download(new Blob([f.compText],{type:'text/plain'}),f.name.replace(/\.obj$/i,'_compressed.obj'));
-});
-document.getElementById('exportGLB').addEventListener('click',async()=>{
-  if(activeIdx<0) return; const f=files[activeIdx]; if(!f.compParsed) return;
-  setProgress('⏳ Generowanie GLB…');
-  try{const b=await exportGLBBlob(f.compParsed);f.glbSize=b.size;updateCompStats(f);download(b,f.name.replace(/\.obj$/i,'_compressed.glb'));}
-  catch(e){alert('GLB error: '+e);}
-  setProgress('');
+/* ─── EXPORT HELPERS ─── */
+function dl(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),600);}
+function setP(msg){const p=SE('progress');p.textContent=msg;p.style.display=msg?'block':'none';}
+function getOutExt(){return SE('outFormat').value;}
+
+async function getBlob(f,fmt){
+  if(fmt==='obj')return new Blob([toOBJ(f.compParsed)],{type:'text/plain'});
+  if(fmt==='dae')return new Blob([toDAE(f.compParsed,f.name.replace(/\.\w+$/,''))],{type:'text/xml'});
+  return await exportGLB(f.compParsed);
+}
+function outName(f,fmt){return f.name.replace(/\.\w+$/,'_compressed.'+fmt);}
+
+SE('exportSingle').addEventListener('click',async()=>{
+  if(activeIdx<0)return;const f=files[activeIdx];if(!f.compParsed)return;
+  const fmt=getOutExt();setP('⏳ Eksport…');
+  try{dl(await getBlob(f,fmt),outName(f,fmt));}catch(e){alert(e);}
+  setP('');
 });
 
-/* ═══ EXPORT ALL (download) ═══ */
-document.getElementById('exportAllOBJ').addEventListener('click',async()=>{
-  const todo=files.filter(f=>f.compText);
+SE('exportAllDown').addEventListener('click',async()=>{
+  const todo=files.filter(f=>f.compParsed);const fmt=getOutExt();
   for(let i=0;i<todo.length;i++){
-    setProgress(`💾 ${i+1}/${todo.length}: ${todo[i].name}`);
-    await new Promise(r=>setTimeout(r,80));
-    download(new Blob([todo[i].compText],{type:'text/plain'}),todo[i].name.replace(/\.obj$/i,'_compressed.obj'));
+    setP(`📦 ${i+1}/${todo.length}: ${todo[i].name}`);
+    await new Promise(r=>setTimeout(r,60));
+    try{dl(await getBlob(todo[i],fmt),outName(todo[i],fmt));}catch(e){}
   }
-  setProgress('');
+  setP('');
 });
-document.getElementById('exportAllGLB').addEventListener('click',async()=>{
-  const todo=files.filter(f=>f.compParsed);
+
+/* ─── FSA WRITE ─── */
+async function fsaWrite(rootH,relPath,content){
+  const parts=relPath.replace(/\\/g,'/').split('/').filter(Boolean);
+  let dir=rootH;
+  for(let i=0;i<parts.length-1;i++) dir=await dir.getDirectoryHandle(parts[i],{create:true});
+  const fh=await dir.getFileHandle(parts[parts.length-1],{create:true});
+  const w=await fh.createWritable();await w.write(content);await w.close();
+}
+
+async function saveToFolder(overwrite=false){
+  const todo=files.filter(f=>f.compParsed);if(!todo.length)return;
+  if(!FSA){alert('Wymaga Chrome/Edge 86+ (File System Access API)');return;}
+  if(overwrite){
+    const ok=await confirm_(`Zostanie nadpisanych ${todo.length} plików w wybranym folderze. Operacja nieodwracalna!`);
+    if(!ok)return;
+  }
+  let dirH;try{dirH=await window.showDirectoryPicker({mode:'readwrite'});}catch(e){return;}
+  const fmt=getOutExt();let ok=0,err=0;
   for(let i=0;i<todo.length;i++){
-    setProgress(`⚡ ${i+1}/${todo.length}: ${todo[i].name}`);
-    await new Promise(r=>setTimeout(r,40));
+    const f=todo[i];setP(`${overwrite?'⚠️':'💾'} ${i+1}/${todo.length}: ${f.name}`);
     try{
-      const b=await exportGLBBlob(todo[i].compParsed);
-      todo[i].glbSize=b.size;
-      if(files[activeIdx]===todo[i]) updateCompStats(todo[i]);
-      download(b,todo[i].name.replace(/\.obj$/i,'_compressed.glb'));
-    }catch(e){}
+      // overwrite: keep original path + original format; save: use selected format + new extension
+      const blobFmt = overwrite ? f.format : fmt;
+      const rel = overwrite
+        ? stripRoot(f.relPath)                                    // oryginalna ścieżka i rozszerzenie
+        : stripRoot(f.relPath).replace(/\.\w+$/,'.'+fmt);        // nowe rozszerzenie wg dropdownu
+      const blob=await getBlob(f,blobFmt);
+      const buf=await blob.arrayBuffer();
+      await fsaWrite(dirH,rel,buf);ok++;
+    }catch(e){console.warn(f.name,e);err++;}
   }
-  renderFileList(); setProgress('');
-});
+  renderList();setP('');
+  alert(`Zapisano: ${ok}${err?`, błędy: ${err}`:''}`);
+}
 
-/* ═══ SAVE TO FOLDER / OVERWRITE ═══ */
-document.getElementById('saveFolderOBJ').addEventListener('click',()=>saveToFolder('obj'));
-document.getElementById('saveFolderGLB').addEventListener('click',()=>saveToFolder('glb'));
-document.getElementById('overwriteOBJ').addEventListener('click',overwriteOriginals);
+SE('saveFolderBtn').addEventListener('click',()=>saveToFolder(false));
+SE('overwriteBtn').addEventListener('click',()=>saveToFolder(true));
+if(!FSA){['saveFolderBtn','overwriteBtn'].forEach(id=>{SE(id).title='Wymaga Chrome/Edge';SE(id).textContent+=' ⚠️';});}
 
-/* ═══ INIT ═══ */
-loadSettings(); refreshLabels(); renderFileList();
-
-// Info if FSA not supported
-if (!FSA_SUPPORTED) {
-  ['saveFolderOBJ','saveFolderGLB','overwriteOBJ'].forEach(id=>{
-    const btn=document.getElementById(id);
-    btn.title='Wymaga Chrome/Edge 86+ (File System Access API)';
-    btn.textContent+=' ⚠️';
+/* ─── CONFIRM ─── */
+function confirm_(msg){
+  return new Promise(res=>{
+    SE('confirmMsg').textContent=msg;
+    const ov=SE('confirmOverlay');ov.classList.add('show');
+    const ok=SE('confirmOk'),cl=SE('confirmCancel');
+    const done=v=>{ov.classList.remove('show');ok.onclick=null;cl.onclick=null;res(v);};
+    ok.onclick=()=>done(true);cl.onclick=()=>done(false);
   });
 }
+
+/* ─── INIT ─── */
+loadCfg();refreshLabels();renderList();
 </script>
 </body>
 </html>
